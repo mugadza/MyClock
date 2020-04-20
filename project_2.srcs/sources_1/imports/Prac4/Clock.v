@@ -69,8 +69,22 @@ output [3:0] SegementDrivers
         if (minsUp ==1 && minutesPrevState == 0)begin
             minutesPrevState = 1;
             minVal = minVal+1;
-            mins1 = (minVal-(minVal%10))/10;//minutes tens
-            mins2 = minVal%10;//minutes units
+          //-------
+          if(minVal > 59)begin
+               hourVal = hourVal+1;
+               if(hourVal>=24)begin
+                   hourVal =0;
+               end
+               minVal = 0;
+               mins1 = 0;//minutes tens
+               mins2 = 0;//minutes units
+               hours1 = (hourVal - (hourVal%10))/10;//hours tens
+               hours2 = hourVal%10;//hours units
+           end
+           else begin
+               mins1 = (minVal-(minVal%10))/10;//minutes tens
+               mins2 = minVal%10;//minutes units
+           end
         end
         if (minsUp ==0) begin
             minutesPrevState = minsUp;
@@ -79,6 +93,9 @@ output [3:0] SegementDrivers
         if (hoursUp == 1 && hoursPrevState == 0) begin
             hoursPrevState = 1;
             hourVal = hourVal+1;
+            if(hourVal>=24)begin
+               hourVal =0;
+            end
             hours1 = (hourVal - (hourVal%10))/10;//hours tens
             hours2 = hourVal%10;//hours units
         end
