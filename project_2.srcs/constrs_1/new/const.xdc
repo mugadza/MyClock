@@ -14,7 +14,9 @@ set_property -dict { PACKAGE_PIN J17   IOSTANDARD LVCMOS33 } [get_ports { Segeme
 set_property -dict { PACKAGE_PIN J18   IOSTANDARD LVCMOS33 } [get_ports { SegementDrivers[1] }]; #IO_L23N_T3_FWE_B_15 Sch=an[1]
 set_property -dict { PACKAGE_PIN T9    IOSTANDARD LVCMOS33 } [get_ports { SegementDrivers[2] }]; #IO_L24P_T3_A01_D17_14 Sch=an[2]
 set_property -dict { PACKAGE_PIN J14   IOSTANDARD LVCMOS33 } [get_ports { SegementDrivers[3] }]; #IO_L19P_T3_A22_15 Sch=an[3]
-set_property -dict { PACKAGE_PIN P18   IOSTANDARD LVCMOS33 } [get_ports { button}]; #IO_L24N_T3_RS0_15 Sch=sw[0]
+set_property -dict { PACKAGE_PIN  P17  IOSTANDARD LVCMOS33 } [get_ports { button}]; #IO_L24N_T3_RS0_15 Sch=sw[0]
 
-set_property -dict { PACKAGE_PIN P17   IOSTANDARD LVCMOS33 } [get_ports { MButton}]; #IO_L24N_T3_RS0_15 Sch=sw[0]
+set_property -dict { PACKAGE_PIN P18   IOSTANDARD LVCMOS33 } [get_ports { MButton}]; #IO_L24N_T3_RS0_15 Sch=sw[0]
 set_property -dict { PACKAGE_PIN M17   IOSTANDARD LVCMOS33 } [get_ports { HButton}]; #IO_L24N_T3_RS0_15 Sch=sw[0]
+set_property -dict { PACKAGE_PIN H17   IOSTANDARD LVCMOS33 } [get_ports { led}]; #IO_L24N_T3_RS0_15 Sch=sw[0]
+

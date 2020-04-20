@@ -22,33 +22,30 @@
 
 module Debounce(
     input CLK100MHZ, 
-    input butt,//can be 1 or zeroc
+    input  button,//can be 1 or zeroc
     output reg out
 );
 
-reg previous_state;
 reg [21:0]Count; //assume count is null on FPGA configuration
 reg status;
 initial 
 begin
     Count <= 21'b0;
-    previous_state <= butt;
     status <= 1'b1;
 end
 
 //--------------------------------------------
 always @(posedge CLK100MHZ) begin 
     // implement your logic here
-    if (Count >= 20000000) begin ///have we allowed debounce?
-        if ((butt == 1'b1) && (status == 1'b1)) begin//now check if the button was pressed
+    if (Count >= 100) begin ///have we allowed debounce?
+        if ((button == 1'b1) && (status == 1'b1)) begin//now check if the button was pressed
             status <= 1'b0; // clears the the status to show pressing
-            out <= ~previous_state;//if button was pressed set out to button 
-            previous_state <= ~previous_state;//update previous_state
         end
         
-        if (butt == 1'b0) begin // is the button released
+        if (button == 1'b0) begin // is the button released
             status <= 1'b1;
         end
+        out = button;
         Count = 0;//restart the counter
     end
     else begin

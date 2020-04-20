@@ -18,8 +18,7 @@ output [3:0] SegementDrivers
 	//Add the reset
 
 	//Add and debounce the buttons
-	wire minsUp = 0;
-	wire hoursUp = 0;
+	
 
     
 	
@@ -44,56 +43,77 @@ output [3:0] SegementDrivers
 	
 
 	//The main logic
-	integer minCount = 0;
-	integer hourCount = 0;
-	integer hourVal = 0;
-	integer minVal = 0;
+	integer minCount;
+	integer hourCount;
+	integer hourVal;
+	integer minVal;
+	wire minsUp;
+	wire hoursUp;
+    reg minutesPrevState;
+    reg hoursPrevState;
 	
-	reg MbuttPrev ;
-	reg HbuttPrev;
 	
 	initial begin
-	   MbuttPrev = minsUp;
-	   HbuttPrev = hoursUp; 
+	   minCount = 0;
+	   hourCount = 0; 
+	   minVal = 0;
+	   hourVal = 0;
+	   minutesPrevState=0;
+	   hoursPrevState =0;
+	  
 	end
 	Debounce debouncer1(CLK100MHZ,MButton,minsUp);//listen for minutes
 	Debounce debouncer2(CLK100MHZ,HButton,hoursUp);//listen for hours
 	
 	always @(posedge CLK100MHZ) begin
-    if (minsUp != MbuttPrev )begin
-        minVal = minVal+1;
-    end
+        if (minsUp ==1 && minutesPrevState == 0)begin
+            minutesPrevState = 1;
+            minVal = minVal+1;
+            mins1 = (minVal-(minVal%10))/10;//minutes tens
+            mins2 = minVal%10;//minutes units
+        end
+        if (minsUp ==0) begin
+            minutesPrevState = minsUp;
+        end
     
-    if (hoursUp !=  HbuttPrev)begin
-        hourVal = hourVal+1;
+        if (hoursUp == 1 && hoursPrevState == 0) begin
+            hoursPrevState = 1;
+            hourVal = hourVal+1;
+            hours1 = (hourVal - (hourVal%10))/10;//hours tens
+            hours2 = hourVal%10;//hours units
+        end
+        if (hoursUp ==0) begin
+            hoursPrevState = hoursUp;
+        end
     end
     
 	//increament minutes and  hours
-	 if (minCount==250000000)begin
-	  if(minVal >= 59)begin
-	       hourVal = hourVal+1;
-	       if(hourVal>=24)begin
-	           hourVal =0;
-	       end
-	       minVal = 0;
-	       mins1 = 0;//minutes tens
-           mins2 = 0;//minutes units
-           hours1 = (hourVal - (hourVal%10))/10;//hours tens
-           hours2 = hourVal%10;//hours units
-           minCount =0;
-	   end
-	   else begin
-           minVal = minVal+1;
-           mins1 = (minVal-(minVal%10))/10;//minutes tens
-           mins2 = minVal%10;//minutes units
-           hours1 = (hourVal - (hourVal%10))/10;//hours tens
-           hours2 = hourVal%10;//hours units
-           minCount =0;
-       end
-	 end
-	 else begin
-	   minCount = minCount+1;
-	 end
-		// implement your logic here
-	end
+//always@(posedge CLK100MHZ) begin	
+//	 if (minCount==250000000)begin
+//	  if(minVal >= 59)begin
+//	       hourVal = hourVal+1;
+//	       if(hourVal>=24)begin
+//	           hourVal =0;
+//	       end
+//	       minVal = 0;
+//	       mins1 = 0;//minutes tens
+//           mins2 = 0;//minutes units
+//           hours1 = (hourVal - (hourVal%10))/10;//hours tens
+//           hours2 = hourVal%10;//hours units
+//           minCount =0;
+//	   end
+//	   else begin
+//           minVal = minVal+1;
+//           mins1 = (minVal-(minVal%10))/10;//minutes tens
+//           mins2 = minVal%10;//minutes units
+//           hours1 = (hourVal - (hourVal%10))/10;//hours tens
+//           hours2 = hourVal%10;//hours units
+//           minCount =0;
+//       end
+//	 end
+//	 else begin
+//	   minCount = minCount+1;
+//	 end
+//		 //implement your logic here
+//	end
 endmodule  
