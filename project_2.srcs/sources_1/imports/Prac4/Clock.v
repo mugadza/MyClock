@@ -102,35 +102,36 @@ output [3:0] SegementDrivers
         if (hoursUp ==0) begin
             hoursPrevState = hoursUp;
         end
-    end
+    
     
 	//increament minutes and  hours
-//always@(posedge CLK100MHZ) begin	
-//	 if (minCount==250000000)begin
-//	  if(minVal >= 59)begin
-//	       hourVal = hourVal+1;
-//	       if(hourVal>=24)begin
-//	           hourVal =0;
-//	       end
-//	       minVal = 0;
-//	       mins1 = 0;//minutes tens
-//           mins2 = 0;//minutes units
-//           hours1 = (hourVal - (hourVal%10))/10;//hours tens
-//           hours2 = hourVal%10;//hours units
-//           minCount =0;
-//	   end
-//	   else begin
-//           minVal = minVal+1;
-//           mins1 = (minVal-(minVal%10))/10;//minutes tens
-//           mins2 = minVal%10;//minutes units
-//           hours1 = (hourVal - (hourVal%10))/10;//hours tens
-//           hours2 = hourVal%10;//hours units
-//           minCount =0;
-//       end
-//	 end
-//	 else begin
-//	   minCount = minCount+1;
-//	 end
-//		 //implement your logic here
-//	end
+//always@(posedge CLK100MHZ) begin//	
+	 if (minCount==250000000)begin
+	  if(minVal >= 59)begin
+	       hourVal = hourVal+1;
+	       if(hourVal>=24)begin
+	           hourVal =0;
+	       end
+	       minVal = 0;
+	       mins1 = 0;//minutes tens
+           mins2 = 0;//minutes units
+           hours1 = (hourVal - (hourVal%10))/10;//hours tens
+           hours2 = hourVal%10;//hours units
+           minCount =0;
+	   end
+	   else begin
+           minVal = minVal+1;
+           mins1 = (minVal-(minVal%10))/10;//minutes tens
+           mins2 = minVal%10;//minutes units
+           hours1 = (hourVal - (hourVal%10))/10;//hours tens
+           hours2 = hourVal%10;//hours units
+           minCount =0;
+       end
+	 end
+	 else begin
+	   minCount = minCount+1;
+	 end
+		 //implement your logic here
+	//end//
+end
 endmodule  
